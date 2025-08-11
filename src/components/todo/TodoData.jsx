@@ -1,9 +1,7 @@
-const TodoData = () => {
-  return (
-    <div className="todo-data">
-      <div>Learning HTML</div>
-    </div>
-  );
+const TodoData = (props) => {
+  const { todoList } = props;
+
+  return <div className="todo-data">{JSON.stringify(todoList)}</div>;
 };
 
 export default TodoData;
