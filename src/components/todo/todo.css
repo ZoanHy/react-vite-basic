@@ -48,6 +48,12 @@
     text-align: center;
 }
 
+.todo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;

@@ -9,7 +9,7 @@ const TodoNew = (props) => {
 
   const handleClick = () => {
     addNewTodo(valueInput);
-    console.log(">>> check valueInput:", valueInput);
+    setValueInput(""); // Clear input after adding
   };
 
   const handleOnChange = (name) => {
@@ -25,6 +25,7 @@ const TodoNew = (props) => {
         placeholder="Add a new task"
         className="todo-input"
         onChange={(event) => handleOnChange(event.target.value)}
+        value={valueInput}
       />
       <button style={{ cursor: "pointer" }} onClick={handleClick}>
         Add
