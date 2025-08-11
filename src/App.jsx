@@ -6,11 +6,7 @@ import "./components/todo/todo.css";
 import { useState } from "react";
 
 function App() {
-  const [todoList, setTodoList] = useState([
-    { id: 1, name: "Learn HTML" },
-    { id: 2, name: "Learn CSS" },
-    { id: 3, name: "Learn JavaScript" },
-  ]);
+  const [todoList, setTodoList] = useState([]);
 
   const addNewTodo = (name) => {
     const newTodo = {
@@ -31,11 +27,13 @@ function App() {
 
       <TodoNew addNewTodo={addNewTodo} />
 
-      <TodoData todoList={todoList} />
-
-      <div className="todo-image">
-        <img src={reactLogo} alt="" className="logo" />
-      </div>
+      {todoList.length > 0 ? (
+        <TodoData todoList={todoList} />
+      ) : (
+        <div className="todo-image">
+          <img src={reactLogo} alt="" className="logo" />
+        </div>
+      )}
     </div>
   );
 }
