@@ -2,34 +2,34 @@ import { Button, Input, notification, Modal } from "antd";
 import { useState } from "react";
 import { createUserAPI } from "../../services/api.service";
 
-const UserForm = () => {
+const UserForm = (props) => {
   const [api, contextHolder] = notification.useNotification();
+
+  const { loadUser } = props;
 
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [phone, setPhone] = useState("");
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
     setIsModalOpen(true);
   };
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
 
   //   console.log(">>> check form: ", fullName, email, password, phoneNumber);
 
   const handleClick = async () => {
-    const res = await createUserAPI(fullName, email, password, phoneNumber);
+    const res = await createUserAPI(fullName, email, password, phone);
 
     if (res.data) {
       api.success({
         message: "User created successfully",
         description: "Tạo user thành công",
       });
-      setIsModalOpen(false);
+      resetAndCloseModal();
+      await loadUser(); // Reload user data after creation
     } else {
       api.error({
         message: "User creation failed",
@@ -38,6 +38,14 @@ const UserForm = () => {
     }
 
     console.log(">>> Check res: ", res.data);
+  };
+
+  const resetAndCloseModal = () => {
+    setFullName("");
+    setEmail("");
+    setPassword("");
+    setPhone("");
+    setIsModalOpen(false);
   };
 
   return (
@@ -55,7 +63,7 @@ const UserForm = () => {
         closable={{ "aria-label": "Custom Close Button" }}
         open={isModalOpen}
         onOk={handleClick}
-        onCancel={handleCancel}
+        onCancel={() => resetAndCloseModal()}
         maskClosable={false}
         okText="Create"
       >
@@ -73,6 +81,7 @@ const UserForm = () => {
           <div>
             <span>Email</span>
             <Input
+              value={email}
               onChange={(event) => {
                 setEmail(event.target.value);
               }}
@@ -81,6 +90,7 @@ const UserForm = () => {
           <div>
             <span>Password</span>
             <Input.Password
+              value={password}
               onChange={(event) => {
                 setPassword(event.target.value);
               }}
@@ -89,8 +99,9 @@ const UserForm = () => {
           <div>
             <span>Phone number</span>
             <Input
+              value={phone}
               onChange={(event) => {
-                setPhoneNumber(event.target.value);
+                setPhone(event.target.value);
               }}
             />
           </div>
