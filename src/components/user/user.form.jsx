@@ -20,6 +20,11 @@ const UserForm = () => {
         message: "User created successfully",
         description: "Tạo user thành công",
       });
+    } else {
+      api.error({
+        message: "User creation failed",
+        description: JSON.stringify(res.message),
+      });
     }
 
     console.log(">>> Check res: ", res.data);
