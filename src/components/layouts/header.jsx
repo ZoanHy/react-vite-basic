@@ -27,6 +27,15 @@ const items = [
     key: "products",
     icon: <BookOutlined />,
   },
+  {
+    label: "Cài đặt",
+    key: "SubMenu",
+    icon: <SettingOutlined />,
+    children: [
+      { label: <Link to="/login">Đăng nhập</Link>, key: "login" },
+      { label: <Link to="/logout">Đăng xuất</Link>, key: "logout" },
+    ],
+  },
 ];
 
 const Header = () => {
