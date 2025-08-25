@@ -7,37 +7,12 @@ import {
   MailOutlined,
   SettingOutlined,
   UsergroupAddOutlined,
+  LoginOutlined,
+  AuditOutlined,
+  AliwangwangOutlined,
 } from "@ant-design/icons";
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/auth.context";
-
-const items = [
-  {
-    label: <Link to="/">Home</Link>,
-    key: "home",
-    icon: <HomeOutlined />,
-  },
-  {
-    label: <Link to="/users">Users</Link>,
-    key: "users",
-    icon: <UsergroupAddOutlined />,
-  },
-
-  {
-    label: <Link to="/books">Books</Link>,
-    key: "products",
-    icon: <BookOutlined />,
-  },
-  {
-    label: "Cài đặt",
-    key: "SubMenu",
-    icon: <SettingOutlined />,
-    children: [
-      { label: <Link to="/login">Đăng nhập</Link>, key: "login" },
-      { label: <Link to="/logout">Đăng xuất</Link>, key: "logout" },
-    ],
-  },
-];
 
 const Header = () => {
   const [current, setCurrent] = useState("");
@@ -45,6 +20,51 @@ const Header = () => {
   const { user } = useContext(AuthContext);
 
   console.log(">>> check user", user);
+
+  const items = [
+    {
+      label: <Link to="/">Home</Link>,
+      key: "home",
+      icon: <HomeOutlined />,
+    },
+    {
+      label: <Link to="/users">Users</Link>,
+      key: "users",
+      icon: <UsergroupAddOutlined />,
+    },
+
+    {
+      label: <Link to="/books">Books</Link>,
+      key: "products",
+      icon: <BookOutlined />,
+    },
+
+    ...(!user.id
+      ? [
+          {
+            label: <Link to="/login">Đăng nhập</Link>,
+            key: "login",
+            icon: <LoginOutlined />,
+          },
+        ]
+      : []),
+
+    ...(user.id
+      ? [
+          {
+            label: `Welcome ${user.fullName}`,
+            key: "setting",
+            icon: <AliwangwangOutlined />,
+            children: [
+              {
+                label: <Link to="/logout">Đăng xuất</Link>,
+                key: "logout",
+              },
+            ],
+          },
+        ]
+      : []),
+  ];
 
   const onClick = (e) => {
     console.log("click ", e);
