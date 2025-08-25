@@ -8,7 +8,8 @@ import {
   SettingOutlined,
   UsergroupAddOutlined,
 } from "@ant-design/icons";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../context/auth.context";
 
 const items = [
   {
@@ -40,6 +41,11 @@ const items = [
 
 const Header = () => {
   const [current, setCurrent] = useState("");
+
+  const { user } = useContext(AuthContext);
+
+  console.log(">>> check user", user);
+
   const onClick = (e) => {
     console.log("click ", e);
     setCurrent(e.key);
